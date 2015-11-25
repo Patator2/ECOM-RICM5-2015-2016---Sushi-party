@@ -1,0 +1,52 @@
+﻿<div ng-controller="NavigationController">
+    <ul class="navigation" id="menu_horizontal">
+        <li ng-repeat="item in items" class="item" ng-class="{'active': item.id == states.activeItem}" ng-click="states.activeItem=item.id">{{item.title}}</li>
+    </ul>
+	<!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p>-->
+
+
+<p class="text-info">
+    Bienvenue chez Sushi Party.<br />
+    Sélectionnez les produits qui vous fond plaisir et ajoutez les dans votre panier.<br />
+    Une fois votre choix effectué, cliquez sur le panier et procédez au paiement.
+</p>
+
+<p>
+    Search: <input ng-model="search">
+</p>
+
+<table class="table table-bordered">
+    <tr class="well">
+        <td class="tdRight" colspan="4" >
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                <i class="icon-shopping-cart" />
+                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+            </a>
+        </td>
+    </tr>
+    <tr ng-repeat="product in store.products | orderBy:'name' | filter:search | filter:ParCategorie" >
+        <td class="tdCenter"><img ng-src="img/{{product.name}}.png" height="100" width="100" alt="{{product.name}}" /></td>
+        <td>
+            <a href="#/products/{{product.name}}"><b>{{product.name}}</b></a><br />
+            {{product.description}}
+			<p>{{product.nbpiece}} pièces</p>
+        </td>
+        <td class="tdRight">
+            {{product.price | currency}}
+        </td>
+        <td class="tdCenter">
+            <a href="" ng-click="cart.addItem(product.name, product.name, product.price, 1)">
+                add to cart
+            </a>
+        </td>
+    </tr>
+    <tr class="well">
+        <td class="tdRight" colspan="4">
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                <i class="icon-shopping-cart" />
+                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+            </a>
+        </td>
+    </tr>
+</table>
+</div>
