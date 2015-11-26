@@ -15,7 +15,9 @@ public interface ICatalogueEjbRemote {
     
     public List<Produit> listeProduits() throws Exception;
     
-    public List<Produit> listeProduitsCaterorie(String codeCategorie) throws Exception;
+    public List<Produit> listeProduitsCaterorie(Long idCategorie) throws Exception;
+    
+    public List<Produit> listeProduitsCaterorie(String designationCategorie) throws Exception;
     
     public Produit CreerProduit(Produit produit) throws Exception;
     

@@ -1,18 +1,18 @@
 package fr.grenoble.polytech.ricm.ejb;
 
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.util.List;
 
-import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
 import fr.grenoble.polytech.ricm.entity.Categorie;
 import fr.grenoble.polytech.ricm.entity.Produit;
+import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
 
+@SuppressWarnings("unchecked")
 @Path("CatalogueEjb")
 @Stateless(name = "CatalogueEjb", mappedName = "ejb/CatalogueEjb" )
 public class CatalogueEjb implements ICatalogueEjbRemote {
@@ -27,21 +27,26 @@ public class CatalogueEjb implements ICatalogueEjbRemote {
         
     }
     
-    @Override
+	@Override
     public List<Categorie> listeCategories() throws Exception {
-	return (List<Categorie>) em.createNamedQuery("Categorie.findAll").getResultList();
+		return (List<Categorie>) em.createNamedQuery("Categorie.findAll").getResultList();
     }
 
     @Override
     public List<Produit> listeProduits() throws Exception {
-	return (List<Produit>) em.createNamedQuery("Produit.findAll").getResultList();
+    	return (List<Produit>) em.createNamedQuery("Produit.findAll").getResultList();
     }
 
     @Override
-    public List<Produit> listeProduitsCaterorie(String codeCategorie) throws Exception {
-	return (List<Produit>) em.createNamedQuery("Produit.findByCaterorie").setParameter("designation", codeCategorie).getResultList();
+    public List<Produit> listeProduitsCaterorie(String designationCategorie) throws Exception {
+    	return (List<Produit>) em.createNamedQuery("Produit.findByCategorieDesignation").setParameter("designationCategorie", designationCategorie).getResultList();
     }
 
+    @Override
+    public List<Produit> listeProduitsCaterorie(Long idCategorie) throws Exception {
+    	return (List<Produit>) em.createNamedQuery("Produit.findByCategorieId").setParameter("idCategorie", idCategorie).getResultList();
+    }
+    
     @Override
     public Produit CreerProduit(Produit produit) throws Exception {
     	em.persist(produit);

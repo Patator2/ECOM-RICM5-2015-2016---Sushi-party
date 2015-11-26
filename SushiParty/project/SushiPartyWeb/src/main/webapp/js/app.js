@@ -3,18 +3,14 @@
 // création d'un module AngularJS (c'est l'application)
 // la directive ng-app montre que l'on utilise AngularJS
 // on analyse la route et on injecte la page appropriée
-var storeApp = angular.module('AngularStore', []);
+var storeApp = angular.module('AngularStore', ['ngResource']);
 
 storeApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('/store', {
         templateUrl: 'partials/store.htm',
         controller: storeController 
-      }).
-      /*when('/products/:productSku', {
-        //templateUrl: 'partials/product.htm',
-        //controller: storeController
-      }).*/
+      }).      
       when('/cart', {
         templateUrl: 'partials/shoppingCart.htm',
         controller: storeController
@@ -24,59 +20,59 @@ storeApp.config(['$routeProvider', function($routeProvider) {
       });
 }]);
 
-storeApp.controller('NavigationController', function ($scope) {
-    // Must use a wrapper object, otherwise "activeItem" won't work
-    $scope.states = {};
-    $scope.states.activeItem = 'Tout afficher';
-    $scope.items = [{
-        id: 'Tout afficher',
-        title: 'Tout afficher'
-    }, {
-        id: 'Lunch Boxes',
-        title: 'Lunch Boxes'
-    }, {
-        id: 'Signature Rolls',
-        title: 'Signature Rolls'
-    }, {
-        id: 'Spring Rolls',
-        title: 'Spring Rolls'
-    }, {
-        id: 'California Rolls',
-        title: 'California Rolls'
-    }, {
-        id: 'Maki',
-        title: 'Maki'
-    }, {
-        id: 'Temaki',
-        title: 'Temaki'
-    }, {
-        id: 'Desserts',
-        title: 'Desserts'
-    }, {
-        id: 'Boissons',
-        title: 'Boissons'
-    }, {
-    }];
+storeApp.factory('Categorie', function($resource) {
+	return $resource('resources/categorie/:id'); 
+});
+
+storeApp.factory('Produit', function($resource) {
+	return $resource('resources/produit/:id');
+});
+
+
+//le storeController contient 2 objets :
+//- store: contient la liste des produits
+//- cart: le panier de shopping avec les objets
+//il sera utilisé par toutes les vues de l'application
+function storeController($scope, $routeParams, DataService, Categorie, Produit) {
+
+ // récupération du store et du cart avec le service
+	$scope.store = DataService.store;	
+	$scope.cart = DataService.cart;
+
+	$scope.loading = true;
+	$scope.states = {};    
+    
+    var listeCategories = Categorie.query(function() {
+    	$scope.items = listeCategories;
+    	$scope.states.activeItem = $scope.items[0].designation;
+    	$scope.loading = false;
+	});
+    
+    $scope.loading = true;
+	var listeProduits = Produit.query(function() {	    
+		$scope.produits =  listeProduits;
+		$scope.loading = false;
+	}); 
+	
 	
 	$scope.ParCategorie = function (item) {
-		if($scope.states.activeItem=='Tout afficher')
-		{
+		if($scope.states.activeItem==$scope.items[0].designation) {
 			return item;
-		}
-		else
-		{
-			if(item.categorie==$scope.states.activeItem)
+		} else {
+			if(item.categorie.designation==$scope.states.activeItem)
 			return item;
 		}
     };
-});
+
+}
 
 // création d'un data service qui fournie un store et un cart qui sera partagé par toutes les vues (au lieu d'en créer un nouveau pour chaque vue)
-storeApp.factory("DataService", function () {
-
-    // création de la boutique
+storeApp.factory("DataService", function (Produit) {
+	
+	// création de la boutique
     var myStore = new store();
-
+    
+    
     // création du panier d'achat
     var myCart = new shoppingCart("AngularStore");
 

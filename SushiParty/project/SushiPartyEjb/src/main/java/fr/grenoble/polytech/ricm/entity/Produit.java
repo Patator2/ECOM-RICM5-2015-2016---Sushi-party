@@ -2,17 +2,16 @@ package fr.grenoble.polytech.ricm.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @XmlRootElement
@@ -22,7 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Produit.findById", query = "SELECT a FROM Produit a WHERE a.id = :id" ),
     @NamedQuery(name = "Produit.findByDesignation", query = "SELECT a FROM Produit a WHERE a.designation = :designation" ),
     @NamedQuery(name = "Produit.findByDescription", query = "SELECT a FROM Produit a WHERE a.description = :description"),
-    @NamedQuery(name = "Produit.findByCategorie", query = "SELECT a FROM Produit a WHERE a.categorie.designation = :designation")
+    @NamedQuery(name = "Produit.findByCategorieDesignation", query = "SELECT a FROM Produit a WHERE a.categorie.designation = :designationCategorie"),
+    @NamedQuery(name = "Produit.findByCategorieId", query = "SELECT a FROM Produit a WHERE a.categorie.id = :idCategorie")
 })
 public class Produit implements Serializable{
 
@@ -37,7 +37,7 @@ public class Produit implements Serializable{
     @Column(unique = true, length = 50, nullable = false)  
     private String designation;
     
-    @Column(unique = true, length = 255, nullable = false)
+    @Column(length = 255, nullable = false)
     private String description;
 
     @Column(precision=10, scale = 3, nullable = false)
@@ -48,7 +48,8 @@ public class Produit implements Serializable{
 
     @Column(length = 30, nullable = true)
     private String imagePath;	
-	
+    
+    @XmlTransient
     @ManyToOne
     private Categorie categorie;
 	

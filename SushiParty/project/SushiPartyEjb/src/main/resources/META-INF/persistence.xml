@@ -6,6 +6,7 @@
     <persistence-unit name="SushiParty-PU" transaction-type="JTA">
         <jta-data-source>jndi/SushiPartyMySQLDB</jta-data-source>
         <class>fr.grenoble.polytech.ricm.entity.Categorie</class>
+        <class>fr.grenoble.polytech.ricm.entity.Produit</class>
         <properties>
 		<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 		<property name="eclipselink.logging.logger" value="ServerLogger"/> 
