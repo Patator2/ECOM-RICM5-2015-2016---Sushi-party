@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="SushiParty-PU" transaction-type="JTA">
+        <jta-data-source>jndi/SushiPartyMySQLDB</jta-data-source>
+        <class>fr.grenoble.polytech.ricm.entity.Categorie</class>
+        <class>fr.grenoble.polytech.ricm.entity.Produit</class>
+        <class>fr.grenoble.polytech.ricm.entity.Utilisateur</class>
+        <class>fr.grenoble.polytech.ricm.entity.Role</class>
+        <properties>
+		<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+		<property name="eclipselink.logging.logger" value="ServerLogger"/> 
+		<property name="eclipselink.logging.level" value="FINE"/>
+		<property name="eclipselink.logging.level.sql" value="FINE"/>
+	</properties>
+    </persistence-unit>
+</persistence>
