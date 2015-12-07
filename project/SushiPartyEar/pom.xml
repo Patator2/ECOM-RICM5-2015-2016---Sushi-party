@@ -90,18 +90,11 @@
                 <groupId>org.glassfish.maven.plugin</groupId>
                 <artifactId>maven-glassfish-plugin</artifactId>
                 <version>2.1</version>
-                <executions>
-                    <execution>
-                        <id>gf-undeploy</id>
-                        <goals>
-                            <goal>undeploy</goal>
-                        </goals>
-                        <phase>clean</phase>
-                    </execution>
+                <executions>                    
                     <execution>
                         <id>gf-deploy</id>
                         <goals>
-                            <goal>deploy</goal>
+                            <goal>redeploy</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
@@ -111,10 +104,14 @@
                     <glassfishDirectory>${glassfish.directory}</glassfishDirectory>
                     <domainDirectory>${glassfish.directory}/glassfish/domains/</domainDirectory>
                     <passwordFile>${basedir}/glassfishpasswordfile</passwordFile>
+		    <debug>true</debug>
+		    <echo>true</echo>
+		    <force>true</force>
                     <domain>
                         <name>domain1</name>
+		        <host>ecomserver.noip.me</host>
                         <adminPort>4848</adminPort>
-                        <httpPort>8080</httpPort>
+                        <httpPort>80</httpPort>
                         <httpsPort>8443</httpsPort>
                     </domain>
                     <components>

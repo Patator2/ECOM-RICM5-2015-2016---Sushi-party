@@ -9,13 +9,10 @@
         <property name="User" value="root" />
         <property name="ServerName" value="localhost" />
         <property name="Port" value="3306" />
-        <property name="DatabaseName" value="SUSHIPARTYDB" />
-        <property name="Password" value="JordanDavid03" />
+        <property name="DatabaseName" value="SushiPartyDB" />
+        <property name="Password" value="SushiParty@2015" />
         <property name="AutoReconnect" value="true" />
-        <property name="URL" value="jdbc:mysql://localhost:3306/SUSHIPARTYDB" />
+        <property name="URL" value="jdbc:mysql://localhost:3306/SushiPartyDB" />
     </jdbc-connection-pool>
     <jdbc-resource jndi-name="jndi/SushiPartyMySQLDB" pool-name="SushiPartyPool" />
-    <auth-realm classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm">
-    	<property name="User" value="root" />
-    </auth-realm>
 </resources>

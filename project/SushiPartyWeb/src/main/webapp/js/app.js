@@ -60,9 +60,9 @@ function storeController($scope, $routeParams, DataService, Categorie, Produit, 
 	}); 
 	
 	
-	var users = User.query(function() {	    
-		$scope.users =  users;	
-	}); 
+	//var users = User.query(function() {	    
+	//	$scope.users =  users;	
+	//}); 
 	
 	
 	$scope.ParCategorie = function (item) {

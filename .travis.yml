@@ -1,15 +1,3 @@
 language: java
 notifications:
   email: false
-deploy:
-  provider: codedeploy
-  access_key_id: AKIAIGMGAYC44AM5MUJA
-  secret_access_key:
-    secure: RwugrxenyO2RMdIUcFhoFyzgnkAtUabLNX+uIge84V48BCKc8rm171eEdD3vrTd+VG8HKwt4DJVt7qSMjp+dIDXIi+WoyMDo10JXBZUPS9Wj5WzNk4WmPurRj8CODUAHgyfLQIMsZ+DJbrv3oYOS3cLJ9FWtIRNPL2hTucM5CjiLoH8fa9TOgWDnl4Lj0qZRFLPGpAo4itkb+w3+o7YvBOae3iLA9KxcGrgu5tqp5Ndncc0wg4QBRmIB42UfkuYfxI++IppBN7wOaN5zvxrXs8oGXa3hQ9AyK2v8XNjAhyyRuBOrQuisWIPpT7n8TXlY57j72NurPlndreUHuMDkb/aUBLNZt9FL97sOna7g23+eTqmnZLrZCsBOvLXKO+lxx8xV96vZMRL5bTqiXjwPHW4m9dk1Nm0YgILMet2/2Uw0qZ0g/1yE61zifooy95sdda2cpSKKozWYR6SOdxiTVJgweVoGQcnL146M+EuCjVJMO84xObQYD3YaKzKLm+JRNupsVtCJDg0uwK28dX551ODrohjk7FNiVk7hmCZdTa9igfFo0To42acmxnvoJq6+U8z4A1+cxyHwS+mLFZKuJpL0MDjiQ8zEtj3M8SX6Sirxr2zo3qSTTie1tRrv5JVRM4hAyudO0Sfqk3sMPyObVL4MiZnj55Kvl26nnjwhwYE=
-  bucket: S3 Bucket
-  key: ''
-  bundle_type: ''
-  application: ECOM-RICM5-2015-2016---Sushi-party
-  deployment_group: SushyPartyDG
-  on:
-    repo: Patator2/ECOM-RICM5-2015-2016---Sushi-party

@@ -24,14 +24,12 @@ public class EjbIntegrationTest {
 
     public EjbIntegrationTest() {
         env = new Properties();
-        env.setProperty( "java.naming.factory.initial", "com.sun.enterprise.naming.impl.SerialInitContextFactory" );
-        env.setProperty( "java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl" );
-        env.setProperty( "java.naming.factory.url.pkgs", "com.sun.enterprise.naming" );
-        env.setProperty( "org.omg.CORBA.ORBInitialHost", "localhost" );
-        env.setProperty( "org.omg.CORBA.ORBInitialPort", "3700" );
-        //env.put(Context.SECURITY_PRINCIPAL, "emfotsing"); 
-        //env.put(Context.SECURITY_CREDENTIALS, "JordanDavid03");
-        env.setProperty( Context.PROVIDER_URL, "iiop://127.0.0.1:3700" );
+        //env.setProperty( "java.naming.factory.initial", "com.sun.enterprise.naming.impl.SerialInitContextFactory" );
+        //env.setProperty( "java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl" );
+        //env.setProperty( "java.naming.factory.url.pkgs", "com.sun.enterprise.naming" );
+        //env.setProperty( "org.omg.CORBA.ORBInitialHost", "ecomserver.noip.me" );
+        //env.setProperty( "org.omg.CORBA.ORBInitialPort", "3700" );
+        //env.setProperty( Context.PROVIDER_URL, "iiop://ecomserver.noip.me:3700" );
     }
 
     @Before
