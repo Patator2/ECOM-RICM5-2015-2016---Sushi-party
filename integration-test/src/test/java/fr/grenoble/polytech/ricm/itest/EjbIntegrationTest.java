@@ -16,6 +16,7 @@ import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Role;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Utilisateur;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
+import fr.grenoble.polytech.ricm.iface.IUtilisateurEjbRemote;
 
 public class EjbIntegrationTest {
 
@@ -120,12 +121,17 @@ public class EjbIntegrationTest {
     @Test
     public void testInitRoles() throws Exception {
         ICatalogueEjbRemote catalogue = ( ICatalogueEjbRemote ) ctx.lookup( ICatalogueEjbRemote.JNDI_NAME);
+        IUtilisateurEjbRemote realms = ( IUtilisateurEjbRemote ) ctx.lookup( IUtilisateurEjbRemote.JNDI_NAME);
+        
         assertTrue(catalogue.saveObject(new Role("Client")).hashCode() != 0);
         assertTrue(catalogue.saveObject(new Role("Manager")).hashCode() != 0);
         assertTrue(catalogue.saveObject(new Role("Admin")).hashCode() != 0);
         
         Role role  = (Role) catalogue.findEntityByLabel("Role","Libelle", "Admin");        
-        assertTrue(catalogue.saveObject(new Utilisateur("emfotsing","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Eric Michel FOTSING","eric.michel.fotsing@gmail.com", role)).hashCode() != 0);
+        assertTrue(realms.CreerUtilisateur(new Utilisateur("emfotsing","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Eric Michel FOTSING","eric.michel.fotsing@gmail.com", role)).hashCode() != 0);
+        assertTrue(realms.CreerUtilisateur(new Utilisateur("bromain","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Romain BARTHELEMY","romain.barthelemy38@gmail.com", role)).hashCode() != 0);
+        assertTrue(realms.CreerUtilisateur(new Utilisateur("cadam","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Christophe ADAM","christophe.adam.2012@gmail.com", role)).hashCode() != 0);
+        assertTrue(realms.CreerUtilisateur(new Utilisateur("saissanou","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Sarah AISSANOU","sarah.aissanou@gmail.com", role)).hashCode() != 0);
     } 
         
 }

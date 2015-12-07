@@ -109,7 +109,7 @@
 		    <force>true</force>
                     <domain>
                         <name>domain1</name>
-		        <host>ecomserver.noip.me</host>
+		        <host>localhost</host>
                         <adminPort>4848</adminPort>
                         <httpPort>80</httpPort>
                         <httpsPort>8443</httpsPort>
