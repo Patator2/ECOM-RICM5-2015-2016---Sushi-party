@@ -14,6 +14,10 @@ storeApp.config(['$routeProvider', function($routeProvider) {
       when('/cart', {
         templateUrl: 'partials/shoppingCart.htm',
         controller: storeController
+      }).   
+      when('/livraison', {
+        templateUrl: 'partials/livraison.htm',
+        controller: commandController
       }).
       otherwise({
         redirectTo: '/store'
@@ -26,6 +30,10 @@ storeApp.factory('Categorie', function($resource) {
 
 storeApp.factory('Produit', function($resource) {
 	return $resource('resources/common/produit/:id');
+})
+
+storeApp.factory('Magasin', function($resource) {
+	return $resource('resources/common/magasin/:id');
 });
 
 storeApp.factory('User', function($resource) {
@@ -73,6 +81,25 @@ function storeController($scope, $routeParams, DataService, Categorie, Produit, 
 			return item;
 		}
     };
+
+}
+
+function commandController($scope, $routeParams, Magasin) {
+
+ // récupération du store et du cart avec le service
+    $scope.mode = true;
+    $scope.area = "";
+    $scope.town = {selectedOption: ""};
+
+    $scope.loading = true;
+    $scope.states = {};    
+  
+    
+    $scope.loading = true;
+    var listeMagasins = Magasin.query(function() {      
+        $scope.magasins =  listeMagasins;
+        $scope.loading = false;
+    }); 
 
 }
 

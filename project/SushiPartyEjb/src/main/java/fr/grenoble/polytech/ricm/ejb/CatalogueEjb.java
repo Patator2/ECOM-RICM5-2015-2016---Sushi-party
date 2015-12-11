@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import fr.grenoble.polytech.ricm.entity.catalogue.Categorie;
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
+import fr.grenoble.polytech.ricm.entity.panier.Magasin;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
 
 @SuppressWarnings("unchecked")
@@ -33,6 +34,11 @@ public class CatalogueEjb implements ICatalogueEjbRemote {
     @Override
     public List<Produit> listeProduits() throws Exception {
     	return (List<Produit>) em.createNamedQuery("Produit.findAll").getResultList();
+    }
+    
+    @Override
+    public List<Magasin> listeMagasins() throws Exception {
+    	return (List<Magasin>) em.createNamedQuery("Magasin.findAll").getResultList();
     }
 
     @Override
@@ -83,7 +89,7 @@ public class CatalogueEjb implements ICatalogueEjbRemote {
     	return em.createNamedQuery(entityClassName+".findBy"+labelField).setParameter(labelField, labelValue).getSingleResult();
     }
 
-    //@RolesAllowed({"Manager"})
+
     public List<?> listeEntities(String entityClassName, String labelField, String labelValue) throws Exception {
     	if (labelField.trim().length()==0)
     		return em.createNamedQuery(entityClassName+".findAll").getResultList();

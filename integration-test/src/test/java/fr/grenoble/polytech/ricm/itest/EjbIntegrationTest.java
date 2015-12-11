@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import fr.grenoble.polytech.ricm.entity.catalogue.Categorie;
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
+import fr.grenoble.polytech.ricm.entity.panier.Magasin;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Role;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Utilisateur;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
@@ -132,6 +133,18 @@ public class EjbIntegrationTest {
         assertTrue(realms.CreerUtilisateur(new Utilisateur("bromain","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Romain BARTHELEMY","romain.barthelemy38@gmail.com", role)).hashCode() != 0);
         assertTrue(realms.CreerUtilisateur(new Utilisateur("cadam","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Christophe ADAM","christophe.adam.2012@gmail.com", role)).hashCode() != 0);
         assertTrue(realms.CreerUtilisateur(new Utilisateur("saissanou","e50ef0b1d5de59fe7c5a186ead3d226288a9ea12639e30d1d81b554d5b22271d","Sarah AISSANOU","sarah.aissanou@gmail.com", role)).hashCode() != 0);
-    } 
+    }
+    
+    
+    @Test
+    public void testIniitMagasin() throws Exception {
+    	ICatalogueEjbRemote catalogue = ( ICatalogueEjbRemote ) ctx.lookup( ICatalogueEjbRemote.JNDI_NAME);
+    	assertTrue(catalogue.saveObject(new Magasin("ARNAC POMPADOUR","19230","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("POMPORT","24240","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("ST POMPONT","24170","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("POMPIERRE SUR DOUBS","25340","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("POMPIGNAN","30170","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("GRENOBLE","38000","--", "--")).hashCode() != 0);
+    }
         
 }

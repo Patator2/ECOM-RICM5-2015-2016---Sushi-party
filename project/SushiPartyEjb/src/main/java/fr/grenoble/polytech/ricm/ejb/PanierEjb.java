@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import fr.grenoble.polytech.ricm.entity.panier.Panier;
 import fr.grenoble.polytech.ricm.iface.IPanierEjbRemote;
 
-@RolesAllowed({"Admin","Manager"})
+
 @SuppressWarnings("unchecked")
 @Stateless(name = "PanierEjb", mappedName = "ejb/PanierEjb")
 public class PanierEjb implements IPanierEjbRemote {
@@ -81,4 +81,6 @@ public class PanierEjb implements IPanierEjbRemote {
     public Panier getPanier(Long id) throws Exception {
         return (Panier) em.find(Panier.class, id);	
     }
+    
+    
 }

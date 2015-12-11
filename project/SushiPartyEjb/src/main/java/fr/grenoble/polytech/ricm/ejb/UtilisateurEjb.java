@@ -38,7 +38,7 @@ public class UtilisateurEjb implements IUtilisateurEjbRemote {
     @Override
     public Utilisateur CreerUtilisateur(Utilisateur utilisateur) throws Exception {
     	em.persist(utilisateur);
-    	mailSender.sendAccountValidationMail(utilisateur.getEmail(), "http://localhost:8080/SushiPartyWeb/ressources/utilisateur/valider/"+utilisateur.getId());
+    	//mailSender.sendAccountValidationMail(utilisateur.getEmail(), "http://localhost:8080/SushiPartyWeb/ressources/utilisateur/valider/"+utilisateur.getId());
     	return utilisateur;
     }
     

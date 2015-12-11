@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<glassfish.directory>/opt/glassfish4</glassfish.directory>
+		<glassfish.directory>/opt/glassfish4</glassfish.directory>
     </properties>
 
     <dependencies>
@@ -104,12 +104,12 @@
                     <glassfishDirectory>${glassfish.directory}</glassfishDirectory>
                     <domainDirectory>${glassfish.directory}/glassfish/domains/</domainDirectory>
                     <passwordFile>${basedir}/glassfishpasswordfile</passwordFile>
-		    <debug>true</debug>
-		    <echo>true</echo>
-		    <force>true</force>
+		    		<debug>true</debug>
+		    		<echo>true</echo>
+		    		<force>true</force>
                     <domain>
                         <name>domain1</name>
-		        <host>localhost</host>
+		        		<host>localhost</host>
                         <adminPort>4848</adminPort>
                         <httpPort>80</httpPort>
                         <httpsPort>8443</httpsPort>

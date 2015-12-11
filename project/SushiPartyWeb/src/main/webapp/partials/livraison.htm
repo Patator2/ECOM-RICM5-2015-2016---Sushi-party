@@ -1,0 +1,49 @@
+<div ng-show="loading"> Chargement en cours .... </div>
+<div ng-hide="loading" >
+    <ul class="navigation" id="menu_horizontal">
+        <li class="item" ng-class="{'active': mode == true}" ng-click="mode=true">Livraison à domicile</li>
+        <li class="item" ng-class="{'active': mode == false}" ng-click="mode=false">Récupération en magasin</li>
+    </ul>
+    <!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p> ng-controller="NavigationController" -->
+
+<div ng-show="mode">
+  <form novalidate class="simple-form">
+    Nom et prénom :<br />
+    <input type="text" ng-model="user.name" /><br />
+    Adresse ligne 1 : <br />
+    <input type="text" ng-model="user.address1" /><br />
+    Adresse ligne 2 : <br />
+    <input type="text" ng-model="user.address2" /><br />
+    Ville : <br />
+    <input type="text" ng-model="user.town" /><br />
+    Code postal : <br />
+    <input type="text" ng-model="user.area" /><br />
+    E-mail: <br />
+    <input type="email" ng-model="user.email" /><br />
+    Numéro de téléphone : <br />
+    <input type="text" ng-model="user.phone" /><br />
+    <br />
+    <button type="button" class="btn btn-warning">Valider la commande</button>
+
+</div>
+
+<div ng-hide="mode">
+    Veuillez indiquer votre code postal : <br />
+    <input type="text" ng-model="area" /><br />
+
+    <form name="myForm">
+        <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:area">
+            <input type="radio" ng-model="town.selectedOption" ng-value="magasin.nom" />{{magasin.nom}}<br />
+        </div>
+    <br /><br />
+    Ville sélectionnée:<br />
+    {{town.selectedOption}}<br />
+    <br />
+    <button type="button" class="btn btn-warning">Valider la commande</button>
+    <br />
+    </form>
+
+</div>
+
+
+</div>

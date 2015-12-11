@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import fr.grenoble.polytech.ricm.entity.catalogue.Categorie;
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
+import fr.grenoble.polytech.ricm.entity.panier.Magasin;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
 
 @Path("common")
@@ -82,6 +83,17 @@ public class CommonRest {
         return list;
     }
     
-   
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/magasin/")
+    public List<Magasin> getMagasins() {
+        List<Magasin> list = null;       
+        try {
+        	ICatalogueEjbRemote catalogue = ( ICatalogueEjbRemote ) ctx.lookup( ICatalogueEjbRemote.JNDI_NAME );
+        	list = catalogue.listeMagasins();
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
 }

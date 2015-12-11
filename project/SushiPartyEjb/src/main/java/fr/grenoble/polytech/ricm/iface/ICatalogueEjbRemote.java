@@ -4,6 +4,7 @@ import javax.ejb.Remote;
 
 import fr.grenoble.polytech.ricm.entity.catalogue.Categorie;
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
+import fr.grenoble.polytech.ricm.entity.panier.Magasin;
 
 import java.util.List; 
 
@@ -37,4 +38,6 @@ public interface ICatalogueEjbRemote {
     public Object findEntityByLabel(String entityClassName, String labelField, String labelValue) throws Exception;
  
     public void cleanupTables() throws Exception;
+
+	List<Magasin> listeMagasins() throws Exception;
 }

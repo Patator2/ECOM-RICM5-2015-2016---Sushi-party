@@ -73,6 +73,11 @@
                     <i class="icon-chevron-left" /> back to store
                 </button>
                 <button 
+                    class="btn btn-block btn-success" 
+                    onclick="window.location.href='default.htm#/livraison'">
+                    <i class="icon-ok icon-white" /> Valider panier
+                </button>
+                <button 
                     class="btn btn-block btn-danger" 
                     ng-click="cart.clearItems()" 
                     ng-disabled="cart.getTotalCount() < 1" >
