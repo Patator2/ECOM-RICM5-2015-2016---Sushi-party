@@ -1,0 +1,21 @@
+    <br />
+    Veuillez compléter les champs ci-dessous :
+    <br />
+    <br />
+    <form name="itemForm">
+        Image :<br />
+        <input type="text" ng-model="user.name" required/><br />
+        Catégorie : <br />
+        <input type="text" ng-model="user.address1" required/><br />
+        Nom du produit : <br />
+        <input type="text" ng-model="user.address2" required/><br />
+        Description : <br />
+        <input type="text" ng-model="user.town" required/><br />
+        Prix : <br />
+        <input type="number" ng-model="user.area" required/><br />
+        Quantité disponible: <br />
+        <input type="number" ng-model="user.email" required/><br />
+        <br />
+        <button type="submit" class="btn btn-success" ng-disabled="itemForm.$invalid" onclick="window.location.href='default.htm#/adminPage'">Confirmer les modifications</button>  
+        <button type="button" class="btn" onclick="window.location.href='default.htm#/adminPage'">Annuler</button>
+    </form>

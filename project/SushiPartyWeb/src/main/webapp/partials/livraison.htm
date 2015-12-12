@@ -5,43 +5,56 @@
         <li class="item" ng-class="{'active': mode == false}" ng-click="mode=false">Récupération en magasin</li>
     </ul>
     <!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p> ng-controller="NavigationController" -->
-
-<div ng-show="mode">
-  <form novalidate class="simple-form">
-    Nom et prénom :<br />
-    <input type="text" ng-model="user.name" /><br />
-    Adresse ligne 1 : <br />
-    <input type="text" ng-model="user.address1" /><br />
-    Adresse ligne 2 : <br />
-    <input type="text" ng-model="user.address2" /><br />
-    Ville : <br />
-    <input type="text" ng-model="user.town" /><br />
-    Code postal : <br />
-    <input type="text" ng-model="user.area" /><br />
-    E-mail: <br />
-    <input type="email" ng-model="user.email" /><br />
-    Numéro de téléphone : <br />
-    <input type="text" ng-model="user.phone" /><br />
+<br />
+    Veuillez compléter les champs ci-dessous :
     <br />
-    <button type="button" class="btn btn-warning">Valider la commande</button>
+    <br />
+<div ng-show="mode">
+    <form name="deliveryForm">
+        Nom et prénom :<br />
+        <input type="text" ng-model="user.name" required/><br />
+        Adresse ligne 1 : <br />
+        <input type="text" ng-model="user.address1" required/><br />
+        Adresse ligne 2 : <br />
+        <input type="text" ng-model="user.address2" required/><br />
+        Ville : <br />
+        <input type="text" ng-model="user.town" required/><br />
+        Code postal : <br />
+        <input type="text" ng-model="user.area" required/><br />
+        E-mail: <br />
+        <input type="email" ng-model="user.email" required/><br />
+        Numéro de téléphone : <br />
+        <input type="text" ng-model="user.phone" required/><br />
+        <br />
+        <button type="submit" class="btn btn-success" ng-disabled="deliveryForm.$invalid" onclick="window.location.href='default.htm#/validation'">Valider la commande</button>
+        <button type="button" class="btn"  onclick="window.location.href='default.htm#/store'">Annuler</button>
+    </form>
 
 </div>
 
 <div ng-hide="mode">
-    Veuillez indiquer votre code postal : <br />
-    <input type="text" ng-model="area" /><br />
+    <form name="shopForm" >
+        E-mail: <br />
+        <input type="email" name="email" ng-model="user.email" required/>
+        <span style="color:red" ng-show="shopForm.email.$dirty && shopForm.email.$invalid">
+        <span ng-show="shopForm.email.$error.required">Votre email est requis.</span>
+        <span ng-show="shopForm.email.$error.email">Adresse email invalide.</span>
+        </span>
+        <br />
+        Veuillez indiquer votre code postal : <br />
+        <input type="text" ng-model="area" /><br />
 
-    <form name="myForm">
-        <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:area">
-            <input type="radio" ng-model="town.selectedOption" ng-value="magasin.nom" />{{magasin.nom}}<br />
-        </div>
-    <br /><br />
-    Ville sélectionnée:<br />
-    {{town.selectedOption}}<br />
-    <br />
-    <button type="button" class="btn btn-warning">Valider la commande</button>
-    <br />
-    </form>
+            <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:area">
+                <input type="radio" name="radio" ng-model="town.selectedOption" ng-value="magasin.nom" ng-required="town.selectedOption==null"/>{{magasin.nom}}<br />
+            </div>
+        <br /><br />
+        Ville sélectionnée:<br />
+        {{town.selectedOption}}<br />
+        <br />
+        <button type="submit" class="btn btn-success" ng-disabled="shopForm.$invalid" onclick="window.location.href='default.htm#/validation'">Valider la commande</button>
+        <button type="button" class="btn"  onclick="window.location.href='default.htm#/store'">Annuler</button>
+    </form>  
+
 
 </div>
 

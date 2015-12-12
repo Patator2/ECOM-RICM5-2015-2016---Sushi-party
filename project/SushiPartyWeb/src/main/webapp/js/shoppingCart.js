@@ -295,7 +295,7 @@ shoppingCart.prototype.checkoutStripe = function (parms, clearCart) {
         key: parms.merchantID,
         address: false,
         amount: this.getTotalPrice() *100, /** expects an integer **/
-        currency: 'usd',
+        currency: '€',
         name: 'Purchase',
         description: 'Description',
         panelLabel: 'Checkout',

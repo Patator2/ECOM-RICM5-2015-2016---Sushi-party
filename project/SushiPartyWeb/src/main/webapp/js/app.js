@@ -19,6 +19,16 @@ storeApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/livraison.htm',
         controller: commandController
       }).
+      when('/validation', {
+        templateUrl: 'partials/validation.htm'
+      }).
+      when('/adminPage', {
+        templateUrl: 'partials/adminPage.htm',
+        controller: storeController
+      }).
+      when('/modifierArticle', {
+        templateUrl: 'partials/modifierArticle.htm'
+      }).
       otherwise({
         redirectTo: '/store'
       });
@@ -89,7 +99,7 @@ function commandController($scope, $routeParams, Magasin) {
  // récupération du store et du cart avec le service
     $scope.mode = true;
     $scope.area = "";
-    $scope.town = {selectedOption: ""};
+    $scope.town = {selectedOption: null};
 
     $scope.loading = true;
     $scope.states = {};    

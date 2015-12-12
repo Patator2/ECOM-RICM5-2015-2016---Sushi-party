@@ -12,9 +12,9 @@
 
                 <!-- header -->
                 <tr class="well">
-                    <td><b>Item</b></td>
-                    <td class="tdCenter"><b>Quantity</b></td>
-                    <td class="tdRight"><b>Price</b></td>
+                    <td><b>Article</b></td>
+                    <td class="tdCenter"><b>Quantité</b></td>
+                    <td class="tdRight"><b>Prix</b></td>
                     <td />
                 </tr>
 
@@ -46,7 +46,7 @@
                             ng-click="cart.addItem(item.name, item.name, item.price, -1)">-</button>
                       </div>
                     </td>
-                    <td class="tdRight">{{item.price * item.quantity | currency}}</td>
+                    <td class="tdRight">{{item.price * item.quantity | number:2}}€</td>
                     <td class="tdCenter" title="remove from cart">
                         <a href="" ng-click="cart.addItem(item.name, item.name, item.price, -10000000)" >
                             <i class="icon-remove" />
@@ -58,7 +58,7 @@
                 <tr class="well">
                     <td><b>Total</b></td>
                     <td class="tdCenter"><b>{{cart.getTotalCount()}}</b></td>
-                    <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
+                    <td class="tdRight"><b>{{cart.getTotalPrice() | number:2}}€</b></td>
                     <td />
                 </tr>
             </table>
@@ -70,23 +70,24 @@
                 <button 
                     class="btn btn-block" 
                     onclick="window.location.href='default.htm'">
-                    <i class="icon-chevron-left" /> back to store
+                    <i class="icon-chevron-left" /> Retour au catalogue
                 </button>
                 <button 
                     class="btn btn-block btn-success" 
-                    onclick="window.location.href='default.htm#/livraison'">
+                    onclick="window.location.href='default.htm#/livraison'"
+                    ng-disabled="cart.getTotalCount() < 1" >
                     <i class="icon-ok icon-white" /> Valider panier
                 </button>
                 <button 
                     class="btn btn-block btn-danger" 
                     ng-click="cart.clearItems()" 
                     ng-disabled="cart.getTotalCount() < 1" >
-                    <i class="icon-trash icon-white" /> clear cart
+                    <i class="icon-trash icon-white" /> Vider le panier
                 </button>
             </p>
 
             <br /><br />
-
+<!-- 
             <p class="text-info">
                 <button
                     class="btn btn-block btn-primary"
@@ -106,9 +107,9 @@
                     ng-disabled="cart.getTotalCount() < 1">
                     <i class="icon-ok icon-white" /> check out using Stripe
                 </button>
-            </p>
+            </p> -->
                 <!-- Stripe needs a form to post to -->
-                <form class="form-stripe"></form>
+         <!--        <form class="form-stripe"></form>
 
             <br /><br />
 
@@ -125,7 +126,7 @@
                     ng-disabled="cart.getTotalCount() < 1" >
                     <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
                 </button>    
-            </p>
+            </p> -->
         </div>
     </div>
 </div>
