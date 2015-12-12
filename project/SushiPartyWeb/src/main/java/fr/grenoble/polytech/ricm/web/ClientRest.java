@@ -5,7 +5,9 @@ import java.util.Properties;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,8 +18,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
+import fr.grenoble.polytech.ricm.entity.panier.Panier;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Utilisateur;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
+import fr.grenoble.polytech.ricm.iface.IPanierEjbRemote;
 
 @SuppressWarnings("unchecked")
 @Path("client")
@@ -63,5 +67,18 @@ public class ClientRest {
         } catch (Exception e) {
         }
         return list;
+    }
+    
+    
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void creerPanier(Panier panier) {    	
+        try {
+        	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup(IPanierEjbRemote.JNDI_NAME );
+        	
+        	panierEjb.CreerPanier(panier);
+        } catch (Exception e) {
+
+        }
     }
 }

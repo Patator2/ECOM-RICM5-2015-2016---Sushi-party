@@ -37,9 +37,24 @@ public class Utilisateur implements Serializable {
     
     @Column(unique = true)
     private String nomComplet;
+    
+    @Column
+    private String addresse1;
+    
+    @Column
+    private String addresse2;
+    
+    @Column
+    private String codePostal;
+    
+    @Column
+    private String ville;
         
     @Column(unique = true)
     private String email;
+    
+    @Column
+    private String telephone;
     
     @ManyToOne
     private Role role;
@@ -47,15 +62,25 @@ public class Utilisateur implements Serializable {
     public Utilisateur() {
     }
 
-    public Utilisateur(String login, String password, String nomComplet, String email, Role role) {
-        this.login = login;
-        this.password = password;
-        this.nomComplet = nomComplet;
-        this.email = email;
-        this.role = role;
-    }
+    
+    public Utilisateur(String login, String password, String nomComplet, String addresse1, String addresse2,
+			String codePostal, String ville, String email, String telephone, Role role) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.nomComplet = nomComplet;
+		this.addresse1 = addresse1;
+		this.addresse2 = addresse2;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.email = email;
+		this.telephone = telephone;
+		this.role = role;
+	}
 
-    public Utilisateur(Long id, String login, String password, String nomComplet, String email, Role role) {
+
+
+	public Utilisateur(Long id, String login, String password, String nomComplet, String email, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -119,7 +144,57 @@ public class Utilisateur implements Serializable {
         return hash;
     }
 
-    @Override
+    public String getAddresse1() {
+		return addresse1;
+	}
+
+
+	public void setAddresse1(String addresse1) {
+		this.addresse1 = addresse1;
+	}
+
+
+	public String getAddresse2() {
+		return addresse2;
+	}
+
+
+	public void setAddresse2(String addresse2) {
+		this.addresse2 = addresse2;
+	}
+
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+
+	public String getVille() {
+		return ville;
+	}
+
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+
+	@Override
     public boolean equals( Object object ) {
         if ( !( object instanceof Utilisateur ) ) {
             return false;

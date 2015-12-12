@@ -68,12 +68,16 @@ public class Panier implements Serializable{
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<PanierProduit> produits = new ArrayList<PanierProduit>();
     
+    
+    @ManyToOne
+    private Magasin magasin;
+    
     public Panier() {
         super();
     }
 
     public Panier(Long id, Date dateCreation, Date dateValidation, Date dateLivraison, Double montant,
-			Utilisateur client, ModeReglement modeReglement, ModeLivraison modelivraison,
+			Utilisateur client, Magasin magasin, ModeReglement modeReglement, ModeLivraison modelivraison,
 			List<PanierProduit> produits) {
 		super();
 		this.id = id;
@@ -82,6 +86,7 @@ public class Panier implements Serializable{
 		this.dateLivraison = dateLivraison;
 		this.montant = montant;
 		this.client = client;
+		this.magasin = magasin;
 		this.modeReglement = modeReglement;
 		this.modelivraison = modelivraison;
 		this.produits = produits;
@@ -149,6 +154,14 @@ public class Panier implements Serializable{
 
 	public void setModelivraison(ModeLivraison modelivraison) {
 		this.modelivraison = modelivraison;
+	}	
+
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
 	}
 
 	public List<PanierProduit> getProduits() {
