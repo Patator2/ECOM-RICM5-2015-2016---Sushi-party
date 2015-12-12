@@ -113,8 +113,16 @@ public class Produit implements Serializable{
     public void setCategorie(Categorie categorie) {
 	this.categorie = categorie;
     }	
+    
+    public Long getQteStock() {
+		return qteStock;
+	}
 
-    @Override
+	public void setQteStock(Long qteStock) {
+		this.qteStock = qteStock;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += ( id != null ? id.hashCode() : 0 );

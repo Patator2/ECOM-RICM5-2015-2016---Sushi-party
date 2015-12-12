@@ -9,7 +9,7 @@ import fr.grenoble.polytech.ricm.entity.panier.Panier;
 @Remote
 public interface IPanierEjbRemote {
 
-    public static final String JNDI_NAME = "ejb/CatalogueEjb";
+    public static final String JNDI_NAME = "ejb/PanierEjb";
     
     public List<Panier> listePaniersClient(Long idClient) throws Exception;
     

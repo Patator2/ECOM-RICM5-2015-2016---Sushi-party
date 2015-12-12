@@ -6,16 +6,24 @@ import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import fr.grenoble.polytech.ricm.entity.panier.Panier;
+import fr.grenoble.polytech.ricm.entity.panier.PanierProduit;
 import fr.grenoble.polytech.ricm.iface.IPanierEjbRemote;
+import fr.grenoble.polytech.ricm.mail.MailSender;
 
 
 @SuppressWarnings("unchecked")
 @Stateless(name = "PanierEjb", mappedName = "ejb/PanierEjb")
 public class PanierEjb implements IPanierEjbRemote {
+    
+	
+    @Inject
+    private MailSender mailSender;
     
     @PersistenceContext
     private EntityManager em;
@@ -33,10 +41,15 @@ public class PanierEjb implements IPanierEjbRemote {
 		return (List<Panier>) em.createNamedQuery("Panier.findAll").getResultList();
     }
     
-    @RolesAllowed({"Admin","Manager","Client"})    
+    //@RolesAllowed({"Admin","Manager","Client"})    
     @Override
+    
     public Panier CreerPanier(Panier panier) throws Exception {
+    	for (PanierProduit lignePanier : panier.getProduits()) {
+			lignePanier.getProduit().setQteStock(lignePanier.getProduit().getQteStock() - lignePanier.getQuantite());
+		}
     	em.persist(panier);
+    	mailSender.sendOrderValidateNotificationMail(panier.getMagasin().getEmail(), panier);
     	return panier;
     }
     

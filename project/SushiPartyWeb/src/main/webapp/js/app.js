@@ -40,6 +40,9 @@ storeApp.factory('User', function($resource) {
 	return $resource('resources/admin/utilisateur/:id');
 });
 
+storeApp.factory('Panier', function($resource) {
+	return $resource('resources/client/panier/:data');
+});
 
 
 //le storeController contient 2 objets :
