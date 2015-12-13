@@ -7,6 +7,9 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +22,7 @@ import fr.grenoble.polytech.ricm.mail.MailSender;
 
 @SuppressWarnings("unchecked")
 @Stateless(name = "PanierEjb", mappedName = "ejb/PanierEjb")
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class PanierEjb implements IPanierEjbRemote {
     
 	
@@ -43,7 +47,7 @@ public class PanierEjb implements IPanierEjbRemote {
     
     //@RolesAllowed({"Admin","Manager","Client"})    
     @Override
-    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Panier CreerPanier(Panier panier) throws Exception {
     	for (PanierProduit lignePanier : panier.getProduits()) {
 			lignePanier.getProduit().setQteStock(lignePanier.getProduit().getQteStock() - lignePanier.getQuantite());
