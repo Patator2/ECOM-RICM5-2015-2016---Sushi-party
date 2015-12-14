@@ -18,6 +18,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.google.gson.Gson;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
 import fr.grenoble.polytech.ricm.entity.panier.Panier;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Utilisateur;
@@ -70,19 +75,6 @@ public class ClientRest {
         return list;
     }
     
-    
-    @PUT
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void creerPanier(Panier panier) {    	
-        try {
-        	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup(IPanierEjbRemote.JNDI_NAME );
-        	
-        	panierEjb.CreerPanier(panier);
-        } catch (Exception e) {
-
-        }
-    }
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/panier/{id}")
@@ -98,12 +90,16 @@ public class ClientRest {
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/panier/{id}")
+    @Path("/panier/")
     public Panier creerPanierShop(Panier panier) {    	
         try {
+        	System.out.println("Objet Panier en entrée: " + new Gson().toJson(panier));
         	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup(IPanierEjbRemote.JNDI_NAME );
-        	
-        	panierEjb.CreerPanierShop(panier);
+        	//Logger.getLogger(ClientRest.class.getName()).log(Level.INFO, null, "salut");
+        	if(panier.getModelivraison())
+        		panierEjb.CreerPanier(panier);
+        	else
+        		panierEjb.CreerPanierShop(panier);
         } catch (Exception e) {
 
         }

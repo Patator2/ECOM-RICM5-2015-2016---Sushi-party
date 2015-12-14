@@ -51,10 +51,7 @@ storeApp.factory('User', function($resource) {
 });
 
 storeApp.factory('Panier', function($resource) {
-	return $resource('resources/client/panier/:id',null,
-    {
-        'update': { method:'PUT' }
-    });
+	return $resource('resources/client/panier/:id');
 });
 
 
@@ -70,15 +67,26 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
 
 	$scope.loading = true;
 	$scope.states = {};  
-    $scope.mode = true;
-    $scope.area = "";
+    $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
+    $scope.panier.id=420484336;
+    $scope.panier.dateLivraison = new Date();
+    $scope.panier.dateValidation = new Date();
+    $scope.panier.dateCreation = new Date();
+    $scope.panier.modeLivraison = true;
+    $scope.panier.modeReglement = '';
+
+
       
-    
+    $scope.loading = true;
     var listeCategories = Categorie.query(function() {
     	$scope.items = listeCategories;
     	$scope.states.activeItem = $scope.items[0].designation;
     	$scope.loading = false;
 	});
+
+    $scope.items=[];
+
+    $scope.panier.client = User.get(2);
     
     $scope.loading = true;
 	var listeProduits = Produit.query(function() {	    
@@ -91,6 +99,10 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
     var listeMagasins = Magasin.query(function() {      
         $scope.magasins =  listeMagasins;
         $scope.loading = false;
+    });
+
+    var currentuser = User.get({id:1}, function() {
+      $scope.panier.client = currentuser;
     });
 
 	
@@ -108,9 +120,12 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
 		}
     };
 
+    $scope.loading = true;
+    var utilisateur = Produit.query(function() {      
+        $scope.produits =  utilisateur;
+        $scope.loading = false;
+    }); 
 
-    $scope.panier = {produits:[]};
-    
     $scope.savePanierLivraison = function(){
         var panier = new Panier();
         panier.data = angular.toJson($scope.panier, false);
@@ -143,7 +158,7 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
             }
         }
         else{
-            $scope.panier = {produits:[]};
+            $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
         }
     }
 
@@ -161,18 +176,28 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
         return isNaN(value) ? 0 : value;
     }
 
+    $scope.getTotalCount = function (name) {
+    var count = 0;
+    for (var i = 0; i < $scope.panier.produits.length; i++) {
+        var item = $scope.panier.produits[i];
+        if (name == null || item.produit.designation == name) {
+            count += this.toNumber(item.quantite);
+        }
+    }
+    return count;
+    }
 
 
-    $scope.addItem = function(name,price,quantity){
+    $scope.addItem = function(product,quantity){
             quantity =  $scope.toNumber(quantity);
-            price =  $scope.toNumber(price);
+            var price =  $scope.toNumber(product.prixVente);
         if (quantity != 0) {
 
             // met à jour la quantité pour l'article existant
             var found = false;
             for (var i = 0; i < $scope.panier.produits.length && !found; i++) {
                 var item = $scope.panier.produits[i].produit;
-                if (item.designation == name) {
+                if (item.designation == product.designation) {
                     found = true;
                     $scope.panier.produits[i].quantite =  $scope.toNumber($scope.panier.produits[i].quantite + quantity);
                     if ($scope.panier.produits[i].quantite <= 0) {
@@ -184,21 +209,19 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
             // ajout d'un nouvel article
             if (!found) {
                 var item = {
-                    produit : {
-                        designation : name,
-                        prixVente : price
-                    },
+                    produit : product,
                     quantite : quantity,
                     prixTotal : quantity * price
                 }
                 $scope.panier.produits.push(item);
             }
         }
+        $scope.panier.montant=$scope.getTotalCount();
         $scope.saveItems();
     }
 
     $scope.clearItems = function () {
-        $scope.panier = {produits:[]};
+        $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
         $scope.saveItems();
     }
 
@@ -213,16 +236,7 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
         return total;
     }
 
-    $scope.getTotalCount = function (name) {
-    var count = 0;
-    for (var i = 0; i < $scope.panier.produits.length; i++) {
-        var item = $scope.panier.produits[i];
-        if (name == null || item.produit.designation == name) {
-            count += this.toNumber(item.quantite);
-        }
-    }
-    return count;
-}
+    
   
 
 }

@@ -1,15 +1,15 @@
 <div ng-show="loading"> Chargement en cours .... </div>
 <div ng-hide="loading" >
     <ul class="navigation" id="menu_horizontal">
-        <li class="item" ng-class="{'active': mode == true}" ng-click="mode=true">Livraison à domicile</li>
-        <li class="item" ng-class="{'active': mode == false}" ng-click="mode=false">Récupération en magasin</li>
+        <li class="item" ng-class="{'active': panier.modeLivraison}" ng-click="panier.modeLivraison=true">Livraison à domicile</li>
+        <li class="item" ng-class="{'active': !panier.modeLivraison}" ng-click="panier.modeLivraison=false">Récupération en magasin</li>
     </ul>
     <!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p> ng-controller="NavigationController" -->
 <br />
     Veuillez compléter les champs ci-dessous :
     <br />
     <br />
-<div ng-show="mode">
+<div ng-show="panier.modeLivraison">
     <form name="deliveryForm">
         Nom et prénom :<br />
         <input type="text" name="name" ng-model="panier.client.nomComplet" required/>
@@ -36,6 +36,11 @@
         <span style="color:red" ng-show="deliveryForm.area.$dirty && deliveryForm.area.$invalid">
         <span ng-show="deliveryForm.area.$error.required">Information requise.</span>
         </span><br />
+        Choisissez le magasin qui effectuera la livraison : <br />
+            <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:panier.client.codePostal">
+                <input type="radio" name="radio" ng-model="panier.magasin" ng-value="magasin" ng-required="panier.magasin==null"/>{{magasin.nom}}<br />
+            </div>
+        <br />
         E-mail: <br />
         <input type="email" name="email" ng-model="panier.client.email" required/>
         <span style="color:red" ng-show="deliveryForm.email.$dirty && deliveryForm.email.$invalid">
@@ -54,7 +59,7 @@
 
 </div>
 
-<div ng-hide="mode">
+<div ng-show="!panier.modeLivraison">
     <form name="shopForm" >
         Numéro de téléphone : <br />
         <input type="text" name="phone" ng-model="panier.client.telephone" required/>
@@ -69,15 +74,12 @@
         <span ng-show="shopForm.email.$error.email">Adresse email invalide.</span>
         </span>
         <br />
-        Recherche de votre ville par code postal ou : <br />
-        <input type="text" ng-model="area" /><br />
+        Recherche de votre ville par code postal : <br />
+        <input type="text" ng-model="panier.client.codePostal" /><br />
 
-            <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:area">
+            <div ng-repeat="magasin in magasins | orderBy:'codePostal' | filter:panier.client.codePostal">
                 <input type="radio" name="radio" ng-model="panier.magasin" ng-value="magasin" ng-required="panier.magasin==null"/>{{magasin.nom}}<br />
             </div>
-        <br /><br />
-        Ville sélectionnée:<br />
-        {{panier.magasin.nom}}<br />
         <br />
         <a href="default.htm#/validation"><button type="submit" class="btn btn-success" ng-disabled="shopForm.$invalid" ng-click="savePanier()">Valider la commande</button></a>
         <button type="button" class="btn"  onclick="window.location.href='default.htm#/store'">Annuler</button>

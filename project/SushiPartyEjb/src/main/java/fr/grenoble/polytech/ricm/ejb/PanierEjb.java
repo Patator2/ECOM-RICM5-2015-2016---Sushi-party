@@ -14,6 +14,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.google.gson.Gson;
+
 import fr.grenoble.polytech.ricm.entity.panier.Panier;
 import fr.grenoble.polytech.ricm.entity.panier.PanierProduit;
 import fr.grenoble.polytech.ricm.iface.IPanierEjbRemote;
