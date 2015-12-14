@@ -76,11 +76,10 @@ public class Panier implements Serializable{
         super();
     }
 
-    public Panier(Long id, Date dateCreation, Date dateValidation, Date dateLivraison, Double montant,
+    public Panier(Date dateCreation, Date dateValidation, Date dateLivraison, Double montant,
 			Utilisateur client, Magasin magasin, ModeReglement modeReglement, ModeLivraison modelivraison,
 			List<PanierProduit> produits) {
 		super();
-		this.id = id;
 		this.dateCreation = dateCreation;
 		this.dateValidation = dateValidation;
 		this.dateLivraison = dateLivraison;

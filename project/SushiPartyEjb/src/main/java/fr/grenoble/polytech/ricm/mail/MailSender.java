@@ -110,4 +110,32 @@ public class MailSender {
        this.sendEmail(to,subject, body);
     }
 
+ // Cette méthode permet d'envoyer un mail de notification au manager du magasin lorsqu'une commande devant être livrée 
+    // à partir dudit magasin a été validé sur le site
+    public void sendOrderValidateNotificationMailAtShop(String to,Panier panier) throws MessagingException {
+    	String subject ="SushiParty - Notification de validation de commande "; 
+    	String body = "Bonjour,<br><br>";
+    		   body	 = body + "Nous vous indiquons qu'une commande a été effectuée dans votre magasin.<br>";
+    		   body	 = body + "La commande va être récupérée dans le magasin.<br>";
+    		   body	 = body + "Si besoin, le numéro du client est : " +  panier.getClient().getTelephone() +"<br>";
+    		   body	 = body + "<br><br>";
+    		   
+    		   body	 = body + "Les produits commandés sont les suivants :<br>";
+    		   body	 = body + "<br>";
+    		   body	 = body + "<table>";    		   
+    		   for (PanierProduit lignePanier : panier.getProduits()) {
+    			   body	 = body + "<tr>" +  "<td>" + lignePanier.getProduit().getDesignation() + "</td>" +  "<td>" + lignePanier.getQuantite() + "</td>" +   "<td>" + lignePanier.getPrixTotal() + "</td>"+"</tr>";
+    		   }
+    		   body	 = body + "</table>";
+    		   body	 = body + "Pour un montant total de  :" + panier.getMontant()  +  "<br>";
+    		   
+    		   body	 = body + "Cordialement,<br>";
+    		   body	 = body + "<br>";
+    		   body	 = body + "Votre équipe SushiParty - ECOM 2015<br>";
+    		   body	 = body + "----------------------------- <br>";
+    		   body	 = body + "<a href=\"http://ecomserver.noip.me/SushiPartyWeb\">www.sushiparty.com</a><br>";
+
+       this.sendEmail(to,subject, body);
+    }
+    
 }

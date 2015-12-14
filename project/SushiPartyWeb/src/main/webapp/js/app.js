@@ -17,7 +17,7 @@ storeApp.config(['$routeProvider', function($routeProvider) {
       }).   
       when('/livraison', {
         templateUrl: 'partials/livraison.htm',
-        controller: commandController
+        controller: storeController
       }).
       when('/validation', {
         templateUrl: 'partials/validation.htm'
@@ -51,7 +51,10 @@ storeApp.factory('User', function($resource) {
 });
 
 storeApp.factory('Panier', function($resource) {
-	return $resource('resources/client/panier/:data');
+	return $resource('resources/client/panier/:id',null,
+    {
+        'update': { method:'PUT' }
+    });
 });
 
 
@@ -59,14 +62,17 @@ storeApp.factory('Panier', function($resource) {
 //- store: contient la liste des produits
 //- cart: le panier de shopping avec les objets
 //il sera utilisé par toutes les vues de l'application
-function storeController($scope, $routeParams, DataService, Categorie, Produit, User) {
+function storeController($scope, $routeParams, DataService, Categorie, Magasin, Produit, User, Panier) {
 
  // récupération du store et du cart avec le service
 	$scope.store = DataService.store;	
 	$scope.cart = DataService.cart;
 
 	$scope.loading = true;
-	$scope.states = {};    
+	$scope.states = {};  
+    $scope.mode = true;
+    $scope.area = "";
+      
     
     var listeCategories = Categorie.query(function() {
     	$scope.items = listeCategories;
@@ -80,6 +86,13 @@ function storeController($scope, $routeParams, DataService, Categorie, Produit, 
 		$scope.loading = false;
 	}); 
 	
+
+    $scope.loading = true;
+    var listeMagasins = Magasin.query(function() {      
+        $scope.magasins =  listeMagasins;
+        $scope.loading = false;
+    });
+
 	
 	//var users = User.query(function() {	    
 	//	$scope.users =  users;	
@@ -95,24 +108,122 @@ function storeController($scope, $routeParams, DataService, Categorie, Produit, 
 		}
     };
 
-}
 
-function commandController($scope, $routeParams, Magasin) {
-
- // récupération du store et du cart avec le service
-    $scope.mode = true;
-    $scope.area = "";
-    $scope.town = {selectedOption: null};
-
-    $scope.loading = true;
-    $scope.states = {};    
-  
+    $scope.panier = {produits:[]};
     
-    $scope.loading = true;
-    var listeMagasins = Magasin.query(function() {      
-        $scope.magasins =  listeMagasins;
-        $scope.loading = false;
-    }); 
+    $scope.savePanierLivraison = function(){
+        var panier = new Panier();
+        panier.data = angular.toJson($scope.panier, false);
+        panier.$update(function(){
+            console.log("Youpi,  Order Saved !!!!")
+        })
+    };   
+    
+    // cette méthode sera appelée lorsque l'on souhaite enregistrer. Je le placerai dans le bouton submit
+    
+    $scope.savePanier = function(){
+        var panier = new Panier();
+        panier.data = angular.toJson($scope.panier, false);
+        panier.$save(function(){
+            console.log("Youpi,  Order Saved !!!!")
+        })
+    };   
+
+    
+
+    // charge les articles du local storage
+    $scope.loadItems = function () {
+        var tmp = localStorage != null ? localStorage[$scope.panier] : null;
+        if (tmp != null && JSON != null) {
+            try {
+                $scope.panier = JSON.parse(tmp);
+            }
+            catch (err) {
+                // on ignore les erreurs lors du chargement
+            }
+        }
+        else{
+            $scope.panier = {produits:[]};
+        }
+    }
+
+    $scope.loadItems();
+
+    // sauvegarde les articles dans le local storage
+    $scope.saveItems = function () {
+        if (localStorage != null && JSON != null) {
+            localStorage[$scope.panier] = JSON.stringify($scope.panier);
+        }
+    }
+
+    $scope.toNumber = function (value) {
+        value = value * 1;
+        return isNaN(value) ? 0 : value;
+    }
+
+
+
+    $scope.addItem = function(name,price,quantity){
+            quantity =  $scope.toNumber(quantity);
+            price =  $scope.toNumber(price);
+        if (quantity != 0) {
+
+            // met à jour la quantité pour l'article existant
+            var found = false;
+            for (var i = 0; i < $scope.panier.produits.length && !found; i++) {
+                var item = $scope.panier.produits[i].produit;
+                if (item.designation == name) {
+                    found = true;
+                    $scope.panier.produits[i].quantite =  $scope.toNumber($scope.panier.produits[i].quantite + quantity);
+                    if ($scope.panier.produits[i].quantite <= 0) {
+                        $scope.panier.produits.splice(i, 1);
+                    }
+                }
+            }
+
+            // ajout d'un nouvel article
+            if (!found) {
+                var item = {
+                    produit : {
+                        designation : name,
+                        prixVente : price
+                    },
+                    quantite : quantity,
+                    prixTotal : quantity * price
+                }
+                $scope.panier.produits.push(item);
+            }
+        }
+        $scope.saveItems();
+    }
+
+    $scope.clearItems = function () {
+        $scope.panier = {produits:[]};
+        $scope.saveItems();
+    }
+
+    $scope.getTotalPrice = function (name) {
+        var total = 0;
+        for (var i = 0; i < $scope.panier.produits.length; i++) {
+            var item = $scope.panier.produits[i].produit;
+            if (name == null || item.designation == name) {
+                total += $scope.toNumber($scope.panier.produits[i].quantite * item.prixVente);
+            }
+        }
+        return total;
+    }
+
+    $scope.getTotalCount = function (name) {
+    var count = 0;
+    for (var i = 0; i < $scope.panier.produits.length; i++) {
+        var item = $scope.panier.produits[i];
+        if (name == null || item.produit.designation == name) {
+            count += this.toNumber(item.quantite);
+        }
+    }
+    return count;
+}
+  
 
 }
 

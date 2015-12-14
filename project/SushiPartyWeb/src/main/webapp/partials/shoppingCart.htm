@@ -19,36 +19,36 @@
                 </tr>
 
                 <!-- message panier vide -->
-                <tr ng-hide="cart.getTotalCount() > 0" >
+                <tr ng-hide="getTotalCount() > 0" >
                     <td class="tdCenter" colspan="4">
                         Votre panier est vide.
                     </td>
                 </tr>
 
                 <!-- article du panier -->
-                <tr ng-repeat="item in cart.items | orderBy:'name'">
-                    <td><img ng-src="img/{{item.name}}.png" height="100" width="100" alt="{{item.name}}"/><p>{{item.name}}</p></td>
+                <tr ng-repeat="item in panier.produits | orderBy:'produit.designation'">
+                    <td><img ng-src="img/{{item.produit.designation}}.png" height="100" width="100" alt="{{item.produit.designation}}"/><p>{{item.name}}</p></td>
 					<!-- <td><img ng-src="img/{{product.name}}.png" height="100" width="100" alt="{{product.name}}"/></td> -->
                     <td class="tdCenter">
                       <div class="input-append">
                         <!-- use type=tel instead of  to prevent spinners -->
                         <input
                             class="span3 text-center" type="tel" 
-                            ng-model="item.quantity" 
-                            ng-change="cart.saveItems()" />
+                            ng-model="item.quantite" 
+                            ng-change="saveItems()" />
                         <button 
                             class="btn btn-success" type="button" 
-                            ng-disabled="item.quantity >= 1000"
-                            ng-click="cart.addItem(item.name, item.name, item.price, +1)">+</button>
+                            ng-disabled="item.quantite >= 1000"
+                            ng-click="addItem(item.produit.designation, item.produit.prixVente, +1)">+</button>
                         <button 
                             class="btn btn-inverse" type="button" 
-                            ng-disabled="item.quantity <= 1"
-                            ng-click="cart.addItem(item.name, item.name, item.price, -1)">-</button>
+                            ng-disabled="item.quantite <= 1"
+                            ng-click="addItem(item.produit.designation, item.produit.prixVente, -1)">-</button>
                       </div>
                     </td>
-                    <td class="tdRight">{{item.price * item.quantity | number:2}}€</td>
+                    <td class="tdRight">{{item.produit.prixVente * item.quantite | number:2}}€</td>
                     <td class="tdCenter" title="remove from cart">
-                        <a href="" ng-click="cart.addItem(item.name, item.name, item.price, -10000000)" >
+                        <a href="" ng-click="addItem(item.produit.designation, item.produit.prixVente, -10000000)" >
                             <i class="icon-remove" />
                         </a>
                     </td>
@@ -57,8 +57,8 @@
                 <!-- footer -->
                 <tr class="well">
                     <td><b>Total</b></td>
-                    <td class="tdCenter"><b>{{cart.getTotalCount()}}</b></td>
-                    <td class="tdRight"><b>{{cart.getTotalPrice() | number:2}}€</b></td>
+                    <td class="tdCenter"><b>{{getTotalCount()}}</b></td>
+                    <td class="tdRight"><b>{{getTotalPrice() | number:2}}€</b></td>
                     <td />
                 </tr>
             </table>
@@ -75,13 +75,13 @@
                 <button 
                     class="btn btn-block btn-success" 
                     onclick="window.location.href='default.htm#/livraison'"
-                    ng-disabled="cart.getTotalCount() < 1" >
+                    ng-disabled="getTotalCount() < 1" >
                     <i class="icon-ok icon-white" /> Valider panier
                 </button>
                 <button 
                     class="btn btn-block btn-danger" 
-                    ng-click="cart.clearItems()" 
-                    ng-disabled="cart.getTotalCount() < 1" >
+                    ng-click="clearItems()" 
+                    ng-disabled="getTotalCount() < 1" >
                     <i class="icon-trash icon-white" /> Vider le panier
                 </button>
             </p>

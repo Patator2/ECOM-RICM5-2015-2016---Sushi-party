@@ -19,9 +19,9 @@
 <table class="table table-bordered">
     <tr class="well">
         <td class="tdRight" colspan="4" >
-            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
                 <i class="icon-shopping-cart" />
-                <b>{{cart.getTotalCount()}}</b> Articles, <b>{{cart.getTotalPrice() | number:2}}€</b>
+                <b>{{getTotalCount()}}</b> Articles, <b>{{getTotalPrice() | number:2}}€</b>
             </a>
         </td>
     </tr>
@@ -36,16 +36,16 @@
             {{product.prixVente | number:2}}€
         </td>
         <td class="tdCenter">
-            <a href="" ng-click="cart.addItem(product.designation, product.designation, product.prixVente, 1)">
+            <a href="" ng-click="addItem(product.designation, product.prixVente, 1)">
                 Ajouter au panier
             </a>
         </td>
     </tr>
     <tr class="well">
         <td class="tdRight" colspan="4">
-            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
                 <i class="icon-shopping-cart" />
-                <b>{{cart.getTotalCount()}}</b> articles, <b>{{cart.getTotalPrice() | number:2}}€</b>
+                <b>{{getTotalCount()}}</b> articles, <b>{{getTotalPrice() | number:2}}€</b>
             </a>
         </td>
     </tr>

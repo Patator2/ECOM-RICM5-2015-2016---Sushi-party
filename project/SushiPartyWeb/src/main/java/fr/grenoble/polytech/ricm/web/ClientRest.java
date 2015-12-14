@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -80,5 +81,32 @@ public class ClientRest {
         } catch (Exception e) {
 
         }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/panier/{id}")
+    public Panier getPanier(@PathParam("id") Long id) {
+        Panier res = null;       
+        try {
+        	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup( IPanierEjbRemote.JNDI_NAME );
+        	res = panierEjb.getPanier(id);
+        } catch (Exception e) {
+        }
+        return res;
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/panier/{id}")
+    public Panier creerPanierShop(Panier panier) {    	
+        try {
+        	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup(IPanierEjbRemote.JNDI_NAME );
+        	
+        	panierEjb.CreerPanierShop(panier);
+        } catch (Exception e) {
+
+        }
+        return panier;
     }
 }

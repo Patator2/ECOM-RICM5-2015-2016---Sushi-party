@@ -57,6 +57,18 @@ public class PanierEjb implements IPanierEjbRemote {
     	return panier;
     }
     
+    //@RolesAllowed({"Admin","Manager","Client"})    
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Panier CreerPanierShop(Panier panier) throws Exception {
+    	for (PanierProduit lignePanier : panier.getProduits()) {
+			lignePanier.getProduit().setQteStock(lignePanier.getProduit().getQteStock() - lignePanier.getQuantite());
+		}
+    	em.persist(panier);
+    	mailSender.sendOrderValidateNotificationMailAtShop(panier.getMagasin().getEmail(), panier);
+    	return panier;
+    }
+    
     @RolesAllowed({"Admin","Manager","Client"})
     @Override
     public Panier ModifierPanier(Panier panier) throws Exception {
