@@ -144,7 +144,7 @@ public class EjbIntegrationTest {
     	assertTrue(catalogue.saveObject(new Magasin("ST POMPONT","24170","--", "--")).hashCode() != 0);
     	assertTrue(catalogue.saveObject(new Magasin("POMPIERRE SUR DOUBS","25340","--", "--")).hashCode() != 0);
     	assertTrue(catalogue.saveObject(new Magasin("POMPIGNAN","30170","--", "--")).hashCode() != 0);
-    	assertTrue(catalogue.saveObject(new Magasin("GRENOBLE","38000","--", "--")).hashCode() != 0);
+    	assertTrue(catalogue.saveObject(new Magasin("GRENOBLE","38000","romain.barthelemy38@gmail.com", "--")).hashCode() != 0);
     }
         
 }

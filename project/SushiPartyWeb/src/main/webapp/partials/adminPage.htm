@@ -1,9 +1,9 @@
-﻿<div ng-show="loading"> Chargement en cours .... </div>
+<div ng-show="loading"> Chargement en cours .... </div>
 <div ng-hide="loading" >
     <ul class="navigation" id="menu_horizontal">
         <li ng-repeat="item in items" class="item" ng-class="{'active': item.designation == states.activeItem}" ng-click="states.activeItem=item.designation">{{item.designation}}</li>
     </ul>
-	<!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p> ng-controller="NavigationController" -->
+    <!--<p>Your active menu item: <span class="highlightOne">{{states.activeItem}}</span></p> ng-controller="NavigationController" -->
 
 
 <p class="text-info">
@@ -18,10 +18,17 @@
 
 <table class="table table-bordered">
     <tr class="well">
-        <td class="tdRight" colspan="4" >
-            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
+        <td class="tdRight" colspan="6" >
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
                 <i class="icon-shopping-cart" />
-                <b>{{getTotalCount()}}</b> Articles, <b>{{getTotalPrice() | number:2}}€</b>
+                <b>{{cart.getTotalCount()}}</b> Articles, <b>{{cart.getTotalPrice() | number:2}}€</b>
+            </a>
+        </td>
+    </tr>
+    <tr class="well">
+        <td class="tdRight" colspan="6" >
+            <a href="default.htm#/modifierArticle" title="ajouter article">
+                Ajouter article
             </a>
         </td>
     </tr>
@@ -30,22 +37,32 @@
         <td>
             <a href="#/produits/{{product.designation}}"><b>{{product.designation}}</b></a><br />
             {{product.description}}
-			<p>{{product.qteStock}} pièces</p>
+            <p>{{product.qteStock}} pièces</p>
         </td>
         <td class="tdRight">
             {{product.prixVente | number:2}}€
         </td>
         <td class="tdCenter">
-            <a href="" ng-click="addItem(product, 1)">
+            <a href="" ng-click="cart.addItem(product.designation, product.designation, product.prixVente, 1)">
                 Ajouter au panier
+            </a>
+        </td>
+        <td class="tdCenter">
+            <a href="default.htm#/modifierArticle">
+                Modifier article
+            </a>
+        </td>
+        <td class="tdCenter">
+            <a href="">
+                Supprimer article
             </a>
         </td>
     </tr>
     <tr class="well">
-        <td class="tdRight" colspan="4">
-            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
+        <td class="tdRight" colspan="6">
+            <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
                 <i class="icon-shopping-cart" />
-                <b>{{getTotalCount()}}</b> articles, <b>{{getTotalPrice() | number:2}}€</b>
+                <b>{{cart.getTotalCount()}}</b> articles, <b>{{cart.getTotalPrice() | number:2}}€</b>
             </a>
         </td>
     </tr>

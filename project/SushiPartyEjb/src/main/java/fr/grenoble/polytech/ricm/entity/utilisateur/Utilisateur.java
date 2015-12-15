@@ -80,8 +80,7 @@ public class Utilisateur implements Serializable {
 
 
 
-	public Utilisateur(Long id, String login, String password, String nomComplet, String email, Role role) {
-        this.id = id;
+	public Utilisateur(String login, String password, String nomComplet, String email, Role role) {
         this.login = login;
         this.password = password;
         this.nomComplet = nomComplet;

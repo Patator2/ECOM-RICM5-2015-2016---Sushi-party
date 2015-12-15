@@ -23,5 +23,7 @@ public interface IUtilisateurEjbRemote {
 
 	Utilisateur ResetPassword(Utilisateur utilisateur) throws Exception;
 
-	Utilisateur ChangePassword(Utilisateur utilisateur) throws Exception;    
+	Utilisateur ChangePassword(Utilisateur utilisateur) throws Exception;
+
+	Utilisateur getUtilisateur(Long id) throws Exception;    
 }

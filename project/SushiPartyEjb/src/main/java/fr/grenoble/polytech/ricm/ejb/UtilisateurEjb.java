@@ -75,4 +75,9 @@ public class UtilisateurEjb implements IUtilisateurEjbRemote {
     public Utilisateur getUtilisateur(String login) throws Exception {
         return (Utilisateur) em.find(Utilisateur.class, login);	
     }
+
+    @Override
+    public Utilisateur getUtilisateur(Long id) throws Exception {
+        return (Utilisateur) em.find(Utilisateur.class, id);	
+    }
 }

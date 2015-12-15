@@ -15,6 +15,8 @@ public interface IPanierEjbRemote {
     
     public Panier CreerPanier(Panier panier) throws Exception;
     
+	public Panier CreerPanierShop(Panier panier) throws Exception;
+    
     public Panier getPanier(Long id) throws Exception;
     
     public Panier ModifierPanier(Panier panier) throws Exception;

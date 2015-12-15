@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import fr.grenoble.polytech.ricm.entity.catalogue.Produit;
 import fr.grenoble.polytech.ricm.entity.utilisateur.Utilisateur;
 import fr.grenoble.polytech.ricm.iface.ICatalogueEjbRemote;
+import fr.grenoble.polytech.ricm.iface.IUtilisateurEjbRemote;
 
 @SuppressWarnings("unchecked")
 @Path("admin")
@@ -51,17 +52,17 @@ public class AdminRest {
         }
         return list;
     }
-    
-    @GET
+	
+	@GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/utilisateur/{id}")
-    public List<Produit> getProduits(@PathParam("id") Long id) {
-        List<Produit> list = null;       
+    public Utilisateur getUtilisateur(@PathParam("id") Long id) {
+        Utilisateur user = null;       
         try {
-        	ICatalogueEjbRemote catalogue = ( ICatalogueEjbRemote ) ctx.lookup( ICatalogueEjbRemote.JNDI_NAME );
-        	list = catalogue.listeProduitsCaterorie(id);            
+        	IUtilisateurEjbRemote users = ( IUtilisateurEjbRemote ) ctx.lookup( IUtilisateurEjbRemote.JNDI_NAME );
+        	user = users.getUtilisateur(id);            
         } catch (Exception e) {
         }
-        return list;
+        return user	;
     }
 }

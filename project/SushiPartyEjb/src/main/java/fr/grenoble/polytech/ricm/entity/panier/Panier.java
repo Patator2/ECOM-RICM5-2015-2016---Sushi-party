@@ -56,14 +56,12 @@ public class Panier implements Serializable{
     @Column(precision=10, scale = 3, nullable = false)  
     private Double montant;
            
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Utilisateur client;
     
-    @ManyToOne
-    private ModeReglement modeReglement;	
+    private String modeReglement;	
 
-    @ManyToOne
-    private ModeLivraison modelivraison;
+    private Boolean modelivraison;
     
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<PanierProduit> produits = new ArrayList<PanierProduit>();
@@ -76,11 +74,10 @@ public class Panier implements Serializable{
         super();
     }
 
-    public Panier(Long id, Date dateCreation, Date dateValidation, Date dateLivraison, Double montant,
-			Utilisateur client, Magasin magasin, ModeReglement modeReglement, ModeLivraison modelivraison,
+    public Panier(Date dateCreation, Date dateValidation, Date dateLivraison, Double montant,
+			Utilisateur client, Magasin magasin, String modeReglement, Boolean modelivraison,
 			List<PanierProduit> produits) {
 		super();
-		this.id = id;
 		this.dateCreation = dateCreation;
 		this.dateValidation = dateValidation;
 		this.dateLivraison = dateLivraison;
@@ -140,19 +137,19 @@ public class Panier implements Serializable{
 		this.client = client;
 	}
 
-	public ModeReglement getModeReglement() {
+	public String getModeReglement() {
 		return modeReglement;
 	}
 
-	public void setModeReglement(ModeReglement modeReglement) {
+	public void setModeReglement(String modeReglement) {
 		this.modeReglement = modeReglement;
 	}
 
-	public ModeLivraison getModelivraison() {
+	public Boolean getModelivraison() {
 		return modelivraison;
 	}
 
-	public void setModelivraison(ModeLivraison modelivraison) {
+	public void setModelivraison(Boolean modelivraison) {
 		this.modelivraison = modelivraison;
 	}	
 
