@@ -28,7 +28,7 @@
     <tr ng-repeat="product in produits | orderBy:'designation' | filter:search | filter:ParCategorie" >
         <td class="tdCenter"><img ng-src="img/{{product.designation}}.png" height="100" width="100" alt="{{product.designation}}" /></td>
         <td>
-            <a href="#/produits/{{product.designation}}"><b>{{product.designation}}</b></a><br />
+            <b>{{product.designation}}</b><br />
             {{product.description}}
 			<p>{{product.qteStock}} pièces</p>
         </td>

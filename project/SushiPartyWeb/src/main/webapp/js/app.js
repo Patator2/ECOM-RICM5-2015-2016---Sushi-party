@@ -55,10 +55,7 @@ storeApp.factory('Panier', function($resource) {
 });
 
 
-//le storeController contient 2 objets :
-//- store: contient la liste des produits
-//- cart: le panier de shopping avec les objets
-//il sera utilisé par toutes les vues de l'application
+//Contrôleur utilisé par toutes les vues de l'application
 function storeController($scope, $routeParams, DataService, Categorie, Magasin, Produit, User, Panier) {
 
  // récupération du store et du cart avec le service
@@ -67,13 +64,16 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
 
 	$scope.loading = true;
 	$scope.states = {};  
-    $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
+    $scope.panier = new Panier();
+    $scope.panier.produits = [];
     $scope.panier.id=420484336;
     $scope.panier.dateLivraison = new Date();
     $scope.panier.dateValidation = new Date();
     $scope.panier.dateCreation = new Date();
     $scope.panier.modeLivraison = true;
     $scope.panier.modeReglement = '';
+    $scope.panier.client={};
+    $scope.panier.client.adresse2 = '';
 
 
       
@@ -125,21 +125,11 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
         $scope.produits =  utilisateur;
         $scope.loading = false;
     }); 
-
-    $scope.savePanierLivraison = function(){
-        var panier = new Panier();
-        panier.data = angular.toJson($scope.panier, false);
-        panier.$update(function(){
-            console.log("Youpi,  Order Saved !!!!")
-        })
-    };   
     
     // cette méthode sera appelée lorsque l'on souhaite enregistrer. Je le placerai dans le bouton submit
     
     $scope.savePanier = function(){
-        var panier = new Panier();
-        panier.data = angular.toJson($scope.panier, false);
-        panier.$save(function(){
+        $scope.panier.$save(function(){
             console.log("Youpi,  Order Saved !!!!")
         })
     };   
@@ -158,7 +148,17 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
             }
         }
         else{
-            $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
+        $scope.panier = new Panier();
+        $scope.panier.produits = [];
+        $scope.panier.id=420484336;
+        $scope.panier.dateLivraison = new Date();
+        $scope.panier.dateValidation = new Date();
+        $scope.panier.dateCreation = new Date();
+        $scope.panier.modeLivraison = true;
+        $scope.panier.modeReglement = '';
+        $scope.panier.client={};
+        $scope.panier.client.adresse2 = '';
+        $scope.saveItems();
         }
     }
 
@@ -221,7 +221,16 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
     }
 
     $scope.clearItems = function () {
-        $scope.panier = {produits:[],modeLivraison:true,dateLivraison:new Date()};
+        $scope.panier = new Panier();
+        $scope.panier.produits = [];
+        $scope.panier.id=420484336;
+        $scope.panier.dateLivraison = new Date();
+        $scope.panier.dateValidation = new Date();
+        $scope.panier.dateCreation = new Date();
+        $scope.panier.modeLivraison = true;
+        $scope.panier.modeReglement = '';
+        $scope.panier.client={};
+        $scope.panier.client.adresse2 = '';
         $scope.saveItems();
     }
 

@@ -22,7 +22,7 @@
         <span ng-show="deliveryForm.address1.$error.required">Information requise.</span>
         </span><br />
         Adresse ligne 2 : <br />
-        <input type="text" name="address2" ng-model="panier.client.addresse2" required/>
+        <input type="text" name="address2" ng-model="panier.client.addresse2"/>
         <span style="color:red" ng-show="deliveryForm.address2.$dirty && deliveryForm.address2.$invalid">
         <span ng-show="deliveryForm.address2.$error.required">Information requise.</span>
         </span><br />
@@ -53,7 +53,7 @@
         <span ng-show="deliveryForm.phone.$error.required">Information requise.</span>
         </span><br />
         <br />
-        <a href="default.htm#/validation"><button type="submit" class="btn btn-success" ng-disabled="deliveryForm.$invalid" ng-click="savePanierLivraison()">Valider la commande</button></a>
+        <a href="default.htm#/validation"><button type="submit" class="btn btn-success" ng-disabled="deliveryForm.$invalid" ng-click="savePanier()">Valider la commande</button></a>
         <button type="button" class="btn"  onclick="window.location.href='default.htm#/store'">Annuler</button>
     </form>
 

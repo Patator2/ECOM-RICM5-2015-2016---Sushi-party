@@ -94,6 +94,7 @@ public class ClientRest {
     public Panier creerPanierShop(Panier panier) {    	
         try {
         	System.out.println("Objet Panier en entrée: " + new Gson().toJson(panier));
+        	panier.setId(null);
         	IPanierEjbRemote panierEjb = ( IPanierEjbRemote ) ctx.lookup(IPanierEjbRemote.JNDI_NAME );
         	//Logger.getLogger(ClientRest.class.getName()).log(Level.INFO, null, "salut");
         	if(panier.getModelivraison())
