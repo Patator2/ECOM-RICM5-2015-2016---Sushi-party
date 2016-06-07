@@ -193,7 +193,7 @@ function storeController($scope, $routeParams, DataService, Categorie, Magasin, 
             var price =  $scope.toNumber(product.prixVente);
         if (quantity != 0) {
 
-            // met à jour la quantité pour l'article existant
+            // met à jour la quantité pour l'article existent
             var found = false;
             for (var i = 0; i < $scope.panier.produits.length && !found; i++) {
                 var item = $scope.panier.produits[i].produit;

@@ -53,7 +53,7 @@ shoppingCart.prototype.addItem = function (name, name, price, quantity) {
     quantity = this.toNumber(quantity);
     if (quantity != 0) {
 
-        // met à jour la quantité pour l'article existant
+        // met à jour la quantité pour l'article existent
         var found = false;
         for (var i = 0; i < this.items.length && !found; i++) {
             var item = this.items[i];
